@@ -4,7 +4,7 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
-import com.sun.tools.sjavac.server.SysInfo;
+// import com.sun.tools.sjavac.server.SysInfo;
 
 import Controller.Main;
 

@@ -12,7 +12,7 @@ public class FrameGame extends JFrame {
 		//this.setSize(800, 575); //taille
 		this.setLocationRelativeTo(null); //centrer à l'écran
 		this.setExtendedState(this.MAXIMIZED_BOTH);// taille max
-		this.setResizable(false); // interdit de la redimensionner
+		//this.setResizable(false); // interdit de la redimensionner
 		this.setAlwaysOnTop(true); // fenêtre devant les autres
 		
 		

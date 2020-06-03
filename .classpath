@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src/Base/src"/>
+	<classpathentry kind="src" path="src/platformerProject/src"/>
+	<classpathentry kind="lib" path="src/Base/Libs/jl1.0.1.jar"/>
+	<classpathentry kind="lib" path="src/Base/Libs/mp3spi1.9.5.jar"/>
+	<classpathentry kind="lib" path="src/Base/Libs/tritonus_share.jar"/>
+	<classpathentry kind="output" path="src/platformerProject/bin"/>
+</classpath>

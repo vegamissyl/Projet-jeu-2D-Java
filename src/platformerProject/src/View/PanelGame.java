@@ -4,7 +4,7 @@ import Model.EntityPlayer;
 
 import javax.swing.JPanel;
 
-import com.sun.tools.sjavac.server.SysInfo;
+// import com.sun.tools.sjavac.server.SysInfo;
 
 import javax.swing.ImageIcon;
 import java.awt.Image;
