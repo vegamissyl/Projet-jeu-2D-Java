@@ -1,10 +1,16 @@
 package Model;
 
-public class EntityPeacefull extends Entity {
+import java.awt.Image;
 
-	public EntityPeacefull(int _x, int _y, int _width, int _height) {
-		super(_x, _y, _width, _height);
-		// TODO Auto-generated constructor stub
+import javax.swing.ImageIcon;
+
+public class EntityPeacefull extends Entity {
+	
+	private ImageIcon iconObstacle;
+	private Image imageObstacle;
+	
+	public EntityPeacefull(int _x, int _y) {
+		super(_x, _y, (int)(View.PanelGame.getLongueur()*0.06), (int)(View.PanelGame.getLongueur()*0.13));
 	}
 
 }

@@ -9,11 +9,11 @@ import javax.swing.ImageIcon;
 import Controller.Main;
 
 public class Entity {
-	//dimension du personnage (largeur et haiteur)
+	//dimension de l'objet (largeur et haiteur)
 	private int width;
 	private int height;
 	
-	//position du personnage
+	//position de l'objet
 	private int x;
 	private int y;
 	
@@ -122,6 +122,15 @@ public class Entity {
 		ico = new ImageIcon(getClass().getResource(str));
 		img = ico.getImage();
 		return img; 
+	}
+	
+	public boolean contactAvant(Object objet) {
+		if(this.isDirectionRight() == true) {
+			// On teste si le personnage rencontre un objet devant lui
+			if (this.x + this.width < objet.getX() || this.x + this.width > objet.getX() + 1 || this.y + this.height <= objet.getY() || this.y >= objet.getY() + objet.getHeight()) {
+				return false;
+			} else {return true;}
+		} else {return false;}
 	}
 	
 }

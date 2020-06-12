@@ -26,6 +26,10 @@ public class Input implements KeyListener{
 			Main.scene.player.setDirectionRight(false);
 			Main.scene.setDx(-(int)(PanelGame.getLongueur()*0.0039));		//si on appui sur D on deplace l'écran vers la droite
 		}
+		
+		if(arg0.getKeyCode() == KeyEvent.VK_SPACE) {
+			View.PanelGame.player.setSaut(true);
+		}
 		//if(!Model.windowVariables.keyPressed.contains(arg0.getKeyChar())) Model.windowVariables.keyPressed.add(arg0.getKeyChar()); 
 	 	//System.out.println("input : " + Model.windowVariables.keyPressed.get(0));
 	}

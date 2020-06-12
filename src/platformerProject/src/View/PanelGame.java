@@ -1,6 +1,9 @@
 package View;
 
+import Model.EntityPeacefull;
 import Model.EntityPlayer;
+import Model.Pic;
+import Model.Tuyau;
 
 import javax.swing.JPanel;
 
@@ -22,16 +25,22 @@ public class PanelGame extends JPanel {
 	private ImageIcon iconPanneau;
 	private Image imagePanneau;
 	
+	private ImageIcon iconTuyau;
+	private Image imageTuyau;
+	
 	private int xFond;// variable : abscisse supérieur gauche de l'image de fond par rapport à l'ecran
 	private int xFond2;
-	private int dx; // variable permettant de deplacer l'ecran (decors) horizontalement
-	
-	private int xPos; //variable qui va repérer les éléments du jeu moins leur position en x = position absolu dans le jeu
-	
+	private static int dx; // variable permettant de deplacer l'ecran (decors) horizontalement
+	private static int xPos; //variable qui va repérer les éléments du jeu moins leur position en x = position absolu dans le jeu
+	private static int ySol; // hauteur du sol
+	private static int hauteurPlafond; // hauteur du plafond du jeu
 	private  static int  longueur;
 	private  static int hauteur;
 	
-	public EntityPlayer player; //joueur
+
+	public Pic pic1;
+	public static EntityPlayer player; //joueur
+	
 	
 	public PanelGame() {
 		super();
@@ -43,7 +52,8 @@ public class PanelGame extends JPanel {
 		
 		this.dx = 0;
 		this.xPos = -1;
-		
+		this.ySol = (int)(PanelGame.hauteur*0.5058);
+		this.hauteurPlafond = 0;
 		iconFond = new ImageIcon(getClass().getResource("/images/fond.png"));
 		this.imageFond = this.iconFond.getImage();
 		this.imageFond2 = this.iconFond.getImage();
@@ -51,8 +61,11 @@ public class PanelGame extends JPanel {
 		iconPanneau = new ImageIcon(getClass().getResource("/images/panneau_fleche.png"));
 		this.imagePanneau = this.iconPanneau.getImage();
 		
+		pic1 = new Pic((int)(PanelGame.longueur*0.56), (int)(PanelGame.hauteur*0.3058),10,10);
+		
 		player = new EntityPlayer((int)(PanelGame.longueur*0.26), (int)(PanelGame.hauteur*0.5058));
 		
+		Audio.playSound("/images/musique.mp3");
 		
 		this.setFocusable(true); //mettre le focus pour écouter l'écran
 		this.requestFocusInWindow(); //pour être sur de récupérer le focus
@@ -61,7 +74,7 @@ public class PanelGame extends JPanel {
 		Thread DisplayScreen = new Thread(new Display()); //on creer un thread sur l affichage de l'écran de décor
 		DisplayScreen.start(); //on lance le thread d'affichage de l'écran
 	}
-	/*guetteurs et setters*/
+	/*getters and setters*/
 	
 	
 	public int getxFond() {
@@ -86,21 +99,28 @@ public class PanelGame extends JPanel {
 		this.xFond2 = xFond2;
 	}
 	
-	public int getxPos() {
+	public static int getxPos() {
 		return xPos;
 	}
 	public void setxPos(int xPos) {
 		this.xPos = xPos;
 	}
 
-	public int getDx() {
-		return dx;
-	}
+	public static int getDx() {return dx;}
 
-	public void setDx(int dx) {
-		this.dx = dx;
-	}
+	public void setDx(int dx) {this.dx = dx;}
 	
+	public static int getySol() {return ySol;}
+
+
+	public void setySol(int ySol) {this.ySol = ySol;}
+
+
+	public static int getHauteurPlafond() {return hauteurPlafond;}
+
+
+	public void setHauteurPlafond(int hauteurPlafond) {this.hauteurPlafond = hauteurPlafond;}
+
 	//***Methodes***//
 	
 	public void moveScreen() { //met à jour la position du fond d'écran
@@ -135,11 +155,19 @@ public class PanelGame extends JPanel {
 		Graphics g2 = (Graphics2D)g; //améliore les graphismes
 		
 		this.moveScreen(); //on appel la fonction pour deplacer l'écran à chaque boucle du run du thread
+		if(this.player.contactAvant(pic1) == true) {
+			this.player.setWalk(false);
+			this.dx = 0;
+		}
+		this.pic1.mouvement();
 		
 		g2.drawImage(this.imageFond, this.xFond,0,this.getWidth(),this.getHeight(),this); //dessin image du fond
 		g2.drawImage(this.imageFond2, this.xFond2,0,this.getWidth(),this.getHeight(),this);
-		g2.drawImage(this.player.walk("perso",(int)(this.longueur*0.0052)), (int)(this.longueur*0.26), (int)(this.hauteur*0.5058),null); //** provisoire
+		//g2.drawImage(this.player.walk("perso",(int)(this.longueur*0.0052)), (int)(this.longueur*0.26), (int)(this.hauteur*0.5058),null); //** provisoire
 		g2.drawImage(this.imagePanneau, (int)(this.longueur*0.24)-this.xPos, (int)(this.hauteur*0.4016),null);//on fixe le panneau au même endroit
+		g2.drawImage(this.pic1.getImagePic(),this.pic1.getX(), this.pic1.getY(),null);
 		//utilisation de longueur et hauteur de l'écran pour bien placer le personnage quelque soit la taille de l'écran de l'ordinateur
+		if(this.player.isSaut() == true) {g2.drawImage(this.player.saute(),this.player.getX(),this.player.getY(),null);}
+		else {g2.drawImage(this.player.walk("perso",(int)(this.longueur*0.0052)), (int)(this.longueur*0.26), (int)(this.hauteur*0.5058),null);}
 	}
 }
