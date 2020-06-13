@@ -44,15 +44,15 @@ public class PanelGame extends JPanel {
 	
 	public PanelGame() {
 		super();
-		Dimension tailleMoniteur = Toolkit.getDefaultToolkit().getScreenSize();
-		PanelGame.longueur = tailleMoniteur.width ; //longueur de l'écran de l'ordinateur
-		PanelGame.hauteur = tailleMoniteur.height ; //hauteur de l'écran d'ordinateur
+		//Dimension tailleMoniteur = Toolkit.getDefaultToolkit().getScreenSize();
+		PanelGame.longueur = 1420; //longueur de l'écran de l'ordinateur
+		PanelGame.hauteur = 800 ; //hauteur de l'écran d'ordinateur
 		this.xFond = 0; //pour que l'image de fond déborde de chaque côté de l'écran
-		this.xFond2 = longueur;
+		this.xFond2 = 1420;
 		
 		this.dx = 0;
 		this.xPos = -1;
-		this.ySol = (int)(PanelGame.hauteur*0.5058);
+		this.ySol = 570;
 		this.hauteurPlafond = 0;
 		iconFond = new ImageIcon(getClass().getResource("/images/fond.png"));
 		this.imageFond = this.iconFond.getImage();
@@ -61,11 +61,11 @@ public class PanelGame extends JPanel {
 		iconPanneau = new ImageIcon(getClass().getResource("/images/panneau_fleche.png"));
 		this.imagePanneau = this.iconPanneau.getImage();
 		
-		pic1 = new Pic((int)(PanelGame.longueur*0.56), (int)(PanelGame.hauteur*0.3058),10,10);
+		pic1 = new Pic(1200, 145, 117 ,63);
 		
-		player = new EntityPlayer((int)(PanelGame.longueur*0.26), (int)(PanelGame.hauteur*0.5058));
+		player = new EntityPlayer(300, 369);
 		
-		Audio.playSound("/images/musique.mp3");
+		//Audio.playSound("/images/musique.mp3");
 		
 		this.setFocusable(true); //mettre le focus pour écouter l'écran
 		this.requestFocusInWindow(); //pour être sur de récupérer le focus
@@ -133,18 +133,18 @@ public class PanelGame extends JPanel {
 		} //si xpos <0 LE PERSONNAGE ne peut pas bouger, il est bloquer par le panneau, il doit aller à droite
 		
 		///lorsque le personnage se deplace à droite
-		if(this.xFond <= -this.longueur) { //si le 1er fond est passé il va à la suite du 2e fond
-			this.xFond = this.longueur;
+		if(this.xFond <= -1420) { //si le 1er fond est passé il va à la suite du 2e fond
+			this.xFond = 1420;
 		}
-		else if(this.xFond2 <= -this.longueur) { //si le 2e fond est passé on le met à la suite du 1er fond
-			this.xFond2 = this.longueur;
+		else if(this.xFond2 <= -1420) { //si le 2e fond est passé on le met à la suite du 1er fond
+			this.xFond2 = 1420;
 		}
 		///de même lorsque le personnage se deplace à gauche
-		else if(this.xFond >= this.longueur) { 
-			this.xFond = -this.longueur;
+		else if(this.xFond >= 1420) { 
+			this.xFond = -1420;
 		}
-		else if(this.xFond2 >= this.longueur) { 
-			this.xFond2 = -this.longueur;
+		else if(this.xFond2 >= 1420) { 
+			this.xFond2 = -1420;
 		}
 	}
 	
@@ -161,13 +161,13 @@ public class PanelGame extends JPanel {
 		}
 		this.pic1.mouvement();
 		
-		g2.drawImage(this.imageFond, this.xFond,0,this.getWidth(),this.getHeight(),this); //dessin image du fond
-		g2.drawImage(this.imageFond2, this.xFond2,0,this.getWidth(),this.getHeight(),this);
+		g2.drawImage(this.imageFond, this.xFond,0,null); //dessin image du fond
+		g2.drawImage(this.imageFond2, this.xFond2,0,null);
 		//g2.drawImage(this.player.walk("perso",(int)(this.longueur*0.0052)), (int)(this.longueur*0.26), (int)(this.hauteur*0.5058),null); //** provisoire
-		g2.drawImage(this.imagePanneau, (int)(this.longueur*0.24)-this.xPos, (int)(this.hauteur*0.4016),null);//on fixe le panneau au même endroit
+		g2.drawImage(this.imagePanneau, 300-this.xPos,280,null);//on fixe le panneau au même endroit
 		g2.drawImage(this.pic1.getImagePic(),this.pic1.getX(), this.pic1.getY(),null);
 		//utilisation de longueur et hauteur de l'écran pour bien placer le personnage quelque soit la taille de l'écran de l'ordinateur
 		if(this.player.isSaut() == true) {g2.drawImage(this.player.saute(),this.player.getX(),this.player.getY(),null);}
-		else {g2.drawImage(this.player.walk("perso",(int)(this.longueur*0.0052)), (int)(this.longueur*0.26), (int)(this.hauteur*0.5058),null);}
+		else {g2.drawImage(this.player.walk("perso",5),this.player.getX(), this.player.getY(),null);}
 	}
 }

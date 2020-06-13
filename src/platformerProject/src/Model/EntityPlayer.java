@@ -15,7 +15,7 @@ public class EntityPlayer extends Entity {
 	private int compteurSaut;
 	
 	public EntityPlayer(int _x, int _y) {
-		super(_x, _y, (int)(View.PanelGame.getLongueur()*0.06), (int)(View.PanelGame.getLongueur()*0.13));
+		super(_x, _y, 100, 208);
 		
 		iconPerso = new ImageIcon(getClass().getResource("/images/perso_immobile_d.png"));
 		this.imagePerso = this.iconPerso.getImage();

@@ -14,17 +14,17 @@ public class Input implements KeyListener{
 			if(Main.scene.getxPos()<0) {
 				Main.scene.setxPos(0);
 				Main.scene.setxFond(0);
-				Main.scene.setxFond2(PanelGame.getLongueur());
+				Main.scene.setxFond2(1420);
 				
 			}
 			Main.scene.player.setWalk(true);
 			Main.scene.player.setDirectionRight(true);
-			Main.scene.setDx((int)(PanelGame.getLongueur()*0.0039));         //si on appui sur D on deplace l'écran vers la gauche
+			Main.scene.setDx(8);         //si on appui sur D on deplace l'écran vers la gauche
 		}
 		else if (arg0.getKeyCode() == KeyEvent.VK_Q){
 			Main.scene.player.setWalk(true);
 			Main.scene.player.setDirectionRight(false);
-			Main.scene.setDx(-(int)(PanelGame.getLongueur()*0.0039));		//si on appui sur D on deplace l'écran vers la droite
+			Main.scene.setDx(-8);		//si on appui sur D on deplace l'écran vers la droite
 		}
 		
 		if(arg0.getKeyCode() == KeyEvent.VK_SPACE) {

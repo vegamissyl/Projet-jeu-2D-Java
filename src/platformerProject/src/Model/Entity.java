@@ -127,7 +127,7 @@ public class Entity {
 	public boolean contactAvant(Object objet) {
 		if(this.isDirectionRight() == true) {
 			// On teste si le personnage rencontre un objet devant lui
-			if (this.x + this.width < objet.getX() || this.x + this.width > objet.getX() + 1 || this.y + this.height <= objet.getY() || this.y >= objet.getY() + objet.getHeight()) {
+			if (this.x + this.width < objet.getX() || this.x + this.width > objet.getX() + 5 || this.y + this.height <= objet.getY() || this.y >= objet.getY() + objet.getHeight()) {
 				return false;
 			} else {return true;}
 		} else {return false;}

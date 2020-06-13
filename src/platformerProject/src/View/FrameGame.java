@@ -9,9 +9,9 @@ public class FrameGame extends JFrame {
 		super();
 		this.setTitle("Platformer Project"); //titre
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // permet de pouvoir fermer la fenêtre
-		//this.setSize(800, 575); //taille
+		this.setSize(1420, 800); //taille
 		this.setLocationRelativeTo(null); //centrer à l'écran
-		this.setExtendedState(this.MAXIMIZED_BOTH);// taille max
+		//this.setExtendedState(this.MAXIMIZED_BOTH);// taille max
 		//this.setResizable(false); // interdit de la redimensionner
 		this.setAlwaysOnTop(true); // fenêtre devant les autres
 		
