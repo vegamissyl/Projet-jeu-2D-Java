@@ -1,6 +1,6 @@
 package View;
 
-import Model.EntityPeacefull;
+
 import Model.EntityPlayer;
 import Model.Pic;
 import Model.Tuyau;
@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -52,7 +53,7 @@ public class PanelGame extends JPanel {
 		
 		this.dx = 0;
 		this.xPos = -1;
-		this.ySol = 570;
+		this.ySol = 690;
 		this.hauteurPlafond = 0;
 		iconFond = new ImageIcon(getClass().getResource("/images/fond.png"));
 		this.imageFond = this.iconFond.getImage();
@@ -61,9 +62,9 @@ public class PanelGame extends JPanel {
 		iconPanneau = new ImageIcon(getClass().getResource("/images/panneau_fleche.png"));
 		this.imagePanneau = this.iconPanneau.getImage();
 		
-		pic1 = new Pic(1200, 145, 117 ,63);
+		pic1 = new Pic(1200,620 , 117 ,63);
 		
-		player = new EntityPlayer(300, 369);
+		player = new EntityPlayer(300, 480);
 		
 		//Audio.playSound("/images/musique.mp3");
 		
@@ -154,20 +155,26 @@ public class PanelGame extends JPanel {
 		super.paintComponent(g);
 		Graphics g2 = (Graphics2D)g; //améliore les graphismes
 		
-		this.moveScreen(); //on appel la fonction pour deplacer l'écran à chaque boucle du run du thread
+		//this.moveScreen(); //on appel la fonction pour deplacer l'écran à chaque boucle du run du thread
 		if(this.player.contactAvant(pic1) == true) {
 			this.player.setWalk(false);
 			this.dx = 0;
 		}
+		this.moveScreen(); //on appel la fonction pour deplacer l'écran à chaque boucle du run du thread
 		this.pic1.mouvement();
 		
+		//System.out.println("x perso : " + this.player.getX());
+		//System.out.println("x pic : " + this.pic1.getX());
 		g2.drawImage(this.imageFond, this.xFond,0,null); //dessin image du fond
 		g2.drawImage(this.imageFond2, this.xFond2,0,null);
-		//g2.drawImage(this.player.walk("perso",(int)(this.longueur*0.0052)), (int)(this.longueur*0.26), (int)(this.hauteur*0.5058),null); //** provisoire
+		
 		g2.drawImage(this.imagePanneau, 300-this.xPos,280,null);//on fixe le panneau au même endroit
-		g2.drawImage(this.pic1.getImagePic(),this.pic1.getX(), this.pic1.getY(),null);
+		g2.drawImage(this.pic1.getImagePic(),this.pic1.getX(), this.pic1.getY(),this.pic1.getWidth(),this.pic1.getHeight(),null);
 		//utilisation de longueur et hauteur de l'écran pour bien placer le personnage quelque soit la taille de l'écran de l'ordinateur
-		if(this.player.isSaut() == true) {g2.drawImage(this.player.saute(),this.player.getX(),this.player.getY(),null);}
-		else {g2.drawImage(this.player.walk("perso",5),this.player.getX(), this.player.getY(),null);}
+		if(this.player.isSaut() == true) {g2.drawImage(this.player.saute(),this.player.getX(),this.player.getY(),this.player.getWidth(),this.player.getHeight(),null);}
+		else {g2.drawImage(this.player.walk("perso",5),this.player.getX(), this.player.getY(),this.player.getWidth(),this.player.getHeight(),null);}
+		
+		g2.drawRect(this.player.getX(),this.player.getY(),this.player.getWidth(),this.player.getHeight()); // drawRect(x-position, y-position, width, height)
+		g2.drawRect(this.pic1.getX(),this.pic1.getY(),this.pic1.getWidth(),this.pic1.getHeight());
 	}
 }

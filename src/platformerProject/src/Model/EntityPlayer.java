@@ -45,7 +45,7 @@ public class EntityPlayer extends Entity {
 		this.compteurSaut++;
 		
 		if(this.compteurSaut <= 35) {
-			if(this.getY() > View.PanelGame.getHauteurPlafond()) {this.setY(this.getY() - 4);}
+			if(this.getY() > View.PanelGame.getHauteurPlafond()) {this.setY(this.getY() - 6);}
 			else {this.compteurSaut = 36;}
 			if(this.isDirectionRight() == true) {src = "/images/perso_marche_d.png";}
 			else {src = "/images/perso_marche_g.png";}

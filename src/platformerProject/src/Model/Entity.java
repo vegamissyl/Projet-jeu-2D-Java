@@ -21,7 +21,7 @@ public class Entity {
 	private boolean directionRight;//vrai quand le personnage est tourné vers la droite
 	public int counter; //compteur des pas du personnage
 	
-	//public static int life = 100;*/
+	
 	
 	public Entity(int _x, int _y, int _width, int _height) {
 		
@@ -127,9 +127,13 @@ public class Entity {
 	public boolean contactAvant(Object objet) {
 		if(this.isDirectionRight() == true) {
 			// On teste si le personnage rencontre un objet devant lui
-			if (this.x + this.width < objet.getX() || this.x + this.width > objet.getX() + 5 || this.y + this.height <= objet.getY() || this.y >= objet.getY() + objet.getHeight()) {
+			
+			if (this.x + this.width < objet.getX() || this.x + this.width > objet.getX() + 5 || this.y + this.height <= objet.getY()) {
 				return false;
-			} else {return true;}
+			} else {
+				System.out.println("Collision !");
+				return true;
+			}
 		} else {return false;}
 	}
 	
