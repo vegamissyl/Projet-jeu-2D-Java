@@ -1,7 +1,9 @@
 package View;
 
 
+import Model.Bloc;
 import Model.EntityPlayer;
+import Model.Object;
 import Model.Pic;
 import Model.Tuyau;
 
@@ -40,6 +42,7 @@ public class PanelGame extends JPanel {
 	
 
 	public Pic pic1;
+	public Bloc bloc1;
 	public static EntityPlayer player; //joueur
 	
 	
@@ -63,7 +66,7 @@ public class PanelGame extends JPanel {
 		this.imagePanneau = this.iconPanneau.getImage();
 		
 		pic1 = new Pic(1200,620 , 117 ,63);
-		
+		bloc1 = new Bloc(1400,330,85,85);
 		player = new EntityPlayer(300, 480);
 		
 		//Audio.playSound("/images/musique.mp3");
@@ -88,38 +91,17 @@ public class PanelGame extends JPanel {
 
 
 
-	public void setxFond(int xFond) {
-		this.xFond = xFond;
-	}
-
-	public int getxFond2() {
-		return xFond2;
-	}
-
-	public void setxFond2(int xFond2) {
-		this.xFond2 = xFond2;
-	}
-	
-	public static int getxPos() {
-		return xPos;
-	}
-	public void setxPos(int xPos) {
-		this.xPos = xPos;
-	}
+	public void setxFond(int xFond) {this.xFond = xFond;}
+	public int getxFond2() {return xFond2;}
+	public void setxFond2(int xFond2) {this.xFond2 = xFond2;}
+	public static int getxPos() {return xPos;}
+	public void setxPos(int xPos) {this.xPos = xPos;}
 
 	public static int getDx() {return dx;}
-
 	public void setDx(int dx) {this.dx = dx;}
-	
 	public static int getySol() {return ySol;}
-
-
 	public void setySol(int ySol) {this.ySol = ySol;}
-
-
 	public static int getHauteurPlafond() {return hauteurPlafond;}
-
-
 	public void setHauteurPlafond(int hauteurPlafond) {this.hauteurPlafond = hauteurPlafond;}
 
 	//***Methodes***//
@@ -149,32 +131,52 @@ public class PanelGame extends JPanel {
 		}
 	}
 	
+	public void contact(Object objet) {
+		if((this.player.contactAvant(objet) == true && player.isDirectionRight() == true) || (player.contactArriere(objet) == true && player.isDirectionRight() == false)) {
+			this.setDx(0);
+			this.player.setWalk(false);
+		}
+	
+		if(this.player.contactDessous(objet) == true && this.player.isSaut() == true) {
+			this.setySol(objet.getY());
+		}else if(this.player.contactDessous(objet) == false) {
+			this.setySol(690);
+			if(this.player.isSaut() == false) {this.player.setY(480);}
+		}
+		
+		if(this.player.contactDessus(objet) == true) {
+			this.setHauteurPlafond(objet.getY() + objet.getHeight());
+		}else if(this.player.contactDessus(objet) == false && this.player.isSaut() == false) {
+			this.setHauteurPlafond(0);
+		}
+	}
 
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
 		Graphics g2 = (Graphics2D)g; //améliore les graphismes
 		
-		//this.moveScreen(); //on appel la fonction pour deplacer l'écran à chaque boucle du run du thread
-		if(this.player.contactAvant(pic1) == true) {
-			this.player.setWalk(false);
-			this.dx = 0;
-		}
+		if(this.player.proche(pic1)) {this.contact(pic1);}
+		if(this.player.proche(bloc1)) {this.contact(bloc1);}
+	
 		this.moveScreen(); //on appel la fonction pour deplacer l'écran à chaque boucle du run du thread
 		this.pic1.mouvement();
+		this.bloc1.mouvement();
 		
-		//System.out.println("x perso : " + this.player.getX());
-		//System.out.println("x pic : " + this.pic1.getX());
+		System.out.println("pnj y : " + (this.player.getY()+this.player.getHeight()) );
+		System.out.println("pic y : " + this.pic1.getY());
 		g2.drawImage(this.imageFond, this.xFond,0,null); //dessin image du fond
 		g2.drawImage(this.imageFond2, this.xFond2,0,null);
 		
 		g2.drawImage(this.imagePanneau, 300-this.xPos,280,null);//on fixe le panneau au même endroit
 		g2.drawImage(this.pic1.getImagePic(),this.pic1.getX(), this.pic1.getY(),this.pic1.getWidth(),this.pic1.getHeight(),null);
+		g2.drawImage(this.bloc1.getImageBloc(),this.bloc1.getX(), this.bloc1.getY(),this.bloc1.getWidth(),this.bloc1.getHeight(),null);
 		//utilisation de longueur et hauteur de l'écran pour bien placer le personnage quelque soit la taille de l'écran de l'ordinateur
 		if(this.player.isSaut() == true) {g2.drawImage(this.player.saute(),this.player.getX(),this.player.getY(),this.player.getWidth(),this.player.getHeight(),null);}
 		else {g2.drawImage(this.player.walk("perso",5),this.player.getX(), this.player.getY(),this.player.getWidth(),this.player.getHeight(),null);}
 		
 		g2.drawRect(this.player.getX(),this.player.getY(),this.player.getWidth(),this.player.getHeight()); // drawRect(x-position, y-position, width, height)
 		g2.drawRect(this.pic1.getX(),this.pic1.getY(),this.pic1.getWidth(),this.pic1.getHeight());
+		g2.drawRect(this.bloc1.getX(),this.bloc1.getY(),this.bloc1.getWidth(),this.bloc1.getHeight());
 	}
 }

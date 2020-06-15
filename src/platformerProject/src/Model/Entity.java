@@ -125,16 +125,48 @@ public class Entity {
 	}
 	
 	public boolean contactAvant(Object objet) {
-		if(this.isDirectionRight() == true) {
-			// On teste si le personnage rencontre un objet devant lui
-			
-			if (this.x + this.width < objet.getX() || this.x + this.width > objet.getX() + 5 || this.y + this.height <= objet.getY()) {
-				return false;
-			} else {
-				System.out.println("Collision !");
-				return true;
-			}
-		} else {return false;}
+		if (this.x + this.width < objet.getX() || this.x + this.width > objet.getX() + 5 || this.y + this.height <= objet.getY() || this.y >= objet.getY() + objet.getHeight()) {
+			return false;
+		} else {
+			System.out.println("Collision avant !");
+			return true;
+		}
 	}
+	public boolean contactArriere(Object objet) {
+		if (this.x > objet.getX() + objet.getWidth() || this.x + this.width > objet.getX() + objet.getWidth() + objet.getWidth() ||
+				this.y + this.height <= objet.getY() || this.y >= objet.getY() + objet.getHeight()) {
+			return false;
+		} else {
+			System.out.println("Collision arrière !");
+			return true;
+		}
+	}
+	public boolean contactDessous(Object objet) {
+		if (this.x + this.width > objet.getX() + 5 || this.x  > objet.getX() + objet.getWidth() - 5||
+				this.y + this.height < objet.getY() || this.y + this.height > objet.getY() + 5 ) {
+			return false;
+		} else {
+			System.out.println("Collision dessous !");
+			return true;
+		}
+	}
+	public boolean contactDessus(Object objet) {
+		if (this.x + this.width < objet.getX() + 5 || this.x  > objet.getX() + objet.getWidth() - 5 ||
+				this.y < objet.getY() + objet.getHeight() || this.y > objet.getY() + objet.getHeight() + 5) {
+			return false;
+		} else {
+			System.out.println("Collision dessus !");
+			return true;
+		}
+	}
+	public boolean proche(Object objet) {
+		if ((this.x > objet.getX() - 10 && this.x < objet.getX() + objet.getWidth() + 10) ||
+				(this.x + this.width > objet.getX() - 10 && this.x + this.width < objet.getX() + objet.getWidth() + 10)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	
 }
