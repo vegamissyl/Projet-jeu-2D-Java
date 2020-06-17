@@ -9,7 +9,7 @@ public class Display implements Runnable {
 	public void run() {
 		while (true) { //on repaint le decor avec la methode repaint
 			Main.scene.repaint(); //repaint appel la fonction paintcomponent de PanelGame
-			//System.out.println("ok");
+			
 			try {
 				Thread.sleep(PAUSE); //pause du thread de 3ms 
 			} catch(InterruptedException e) {

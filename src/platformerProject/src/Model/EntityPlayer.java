@@ -11,11 +11,22 @@ public class EntityPlayer extends Entity {
 	
 	private ImageIcon iconPerso;
 	private Image imagePerso;
+	private ImageIcon iconVies;
+	private Image imageVies;
 	private boolean saut;
 	private int compteurSaut;
+	private int vies;
+	private int compteurMort;
+	private boolean invincible;
 	
 	public EntityPlayer(int _x, int _y) {
 		super(_x, _y, 100, 208);
+		this.vies = 3;
+		this.compteurMort = 0;
+		this.invincible = false;
+		iconVies = new ImageIcon(getClass().getResource("/images/3_coeurs.png"));
+		this.imageVies = this.iconVies.getImage();
+		
 		
 		iconPerso = new ImageIcon(getClass().getResource("/images/perso_immobile_d.png"));
 		this.imagePerso = this.iconPerso.getImage();
@@ -29,15 +40,34 @@ public class EntityPlayer extends Entity {
 
 	public Image getImagePerso() {return imagePerso;}
 
-
+	public Image getImageVies() {return imageVies;}
+	
 	public boolean isSaut() {return saut;}
-
-	//***Setters***//
 	
 	public void setSaut(boolean saut) {this.saut = saut;}
 	
-	//***Methods***//
+	public int getVies() {return vies;}
+
+	public void setVies(int vies) {
+		this.vies = vies;
+		if(this.vies == 2) {
+			this.iconVies = new ImageIcon(getClass().getResource("/images/2_coeurs.png"));
+			this.imageVies = this.iconVies.getImage();
+		} else {
+			this.iconVies = new ImageIcon(getClass().getResource("/images/coeur.png"));
+			this.imageVies = this.iconVies.getImage();
+		}
+	}
 	
+	public int getCompteurMort() {return compteurMort;}
+	public void setCompteurMort(int compteurMort) {	this.compteurMort = compteurMort;}
+	
+	public boolean isInvincible() {return invincible;}
+	public void setInvincible(boolean invincible) {this.invincible = invincible;}
+
+	
+	//***Methods***//
+
 	public Image saute() {
 		ImageIcon ico;
 		Image img;
@@ -49,7 +79,7 @@ public class EntityPlayer extends Entity {
 			else {this.compteurSaut = 36;}
 			if(this.isDirectionRight() == true) {src = "/images/perso_marche_d.png";}
 			else {src = "/images/perso_marche_g.png";}
-		}else if(this.getY() + this.getHeight() < View.PanelGame.getySol()) {this.setY(this.getY() + 1);
+		}else if(this.getY() + this.getHeight() < View.PanelGame.getySol()) {this.setY(this.getY() + 2);
 			if(this.isDirectionRight() == true) {src = "/images/perso_marche_d.png";}
 			else {src = "/images/perso_marche_g.png";}
 		}else {

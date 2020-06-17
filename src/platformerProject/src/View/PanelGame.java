@@ -2,10 +2,11 @@ package View;
 
 
 import Model.Bloc;
+import Model.Drapeau;
 import Model.EntityPlayer;
 import Model.Object;
 import Model.Pic;
-import Model.Tuyau;
+import Model.Plateforme;
 
 import javax.swing.JPanel;
 
@@ -28,8 +29,6 @@ public class PanelGame extends JPanel {
 	private ImageIcon iconPanneau;
 	private Image imagePanneau;
 	
-	private ImageIcon iconTuyau;
-	private Image imageTuyau;
 	
 	private int xFond;// variable : abscisse supérieur gauche de l'image de fond par rapport à l'ecran
 	private int xFond2;
@@ -41,8 +40,22 @@ public class PanelGame extends JPanel {
 	private  static int hauteur;
 	
 
+	public Drapeau drapeau;
+	
 	public Pic pic1;
+	public Pic pic2;
+	public Pic pic3;
+	public Pic pic4;
+	public Pic pic5;
+	public Pic pic6;
+	public Pic pic7;
+	public Pic pic8;
 	public Bloc bloc1;
+	public Bloc bloc2;
+	public Bloc bloc3;
+	public Bloc bloc4;
+	public Bloc bloc5;
+	public Plateforme plateforme1;
 	public static EntityPlayer player; //joueur
 	
 	
@@ -65,11 +78,23 @@ public class PanelGame extends JPanel {
 		iconPanneau = new ImageIcon(getClass().getResource("/images/panneau_fleche.png"));
 		this.imagePanneau = this.iconPanneau.getImage();
 		
-		pic1 = new Pic(1200,620 , 117 ,63);
-		bloc1 = new Bloc(1400,330,85,85);
+		drapeau = new Drapeau(4000,250,370,675);
+		
+		pic1 = new Pic(1300,620 , 117 ,63);
+		pic2 = new Pic(1930,620 , 117 ,63);
+		pic3 = new Pic(2030,620 , 117 ,63);
+		pic4 = new Pic(2130,620 , 117 ,63);
+		pic5 = new Pic(2230,620 , 117 ,63);
+		//pic6 = new Pic(2230,620 , 117 ,63);
+		//pic7 = new Pic(2330,620 , 117 ,63);
+		//pic8 = new Pic(2330,620 , 117 ,63);
+		bloc1 = new Bloc(1000,595,85,85);
+		bloc2 = new Bloc(1600,595,85,85);
+		bloc3 = new Bloc(1800,385,85,85);
+		bloc4 = new Bloc(3000,385,85,85);
+		plateforme1 = new Plateforme(2450, 330, 480,65);
 		player = new EntityPlayer(300, 480);
 		
-		//Audio.playSound("/images/musique.mp3");
 		
 		this.setFocusable(true); //mettre le focus pour écouter l'écran
 		this.requestFocusInWindow(); //pour être sur de récupérer le focus
@@ -133,12 +158,27 @@ public class PanelGame extends JPanel {
 	
 	public void contact(Object objet) {
 		if((this.player.contactAvant(objet) == true && player.isDirectionRight() == true) || (player.contactArriere(objet) == true && player.isDirectionRight() == false)) {
+			if(objet.getClass().getName() == "Model.Pic") {
+				this.player.setCompteurMort(this.player.getCompteurMort()+1);
+				if(this.player.getCompteurMort() % 100 == 0) {
+					this.player.setVies(this.player.getVies()-1);
+				}
+			}
 			this.setDx(0);
 			this.player.setWalk(false);
 		}
 	
 		if(this.player.contactDessous(objet) == true && this.player.isSaut() == true) {
+			if(objet.getClass().getName() == "Model.Pic") {
+				if(this.player.isInvincible() == false) {
+					this.player.setVies(this.player.getVies()-1);
+					this.player.setInvincible(true);
+				} else {
+					this.player.setInvincible(false);
+				}	
+			}
 			this.setySol(objet.getY());
+			
 		}else if(this.player.contactDessous(objet) == false) {
 			this.setySol(690);
 			if(this.player.isSaut() == false) {this.player.setY(480);}
@@ -157,26 +197,57 @@ public class PanelGame extends JPanel {
 		Graphics g2 = (Graphics2D)g; //améliore les graphismes
 		
 		if(this.player.proche(pic1)) {this.contact(pic1);}
+		if(this.player.proche(pic2)) {this.contact(pic2);}
+		if(this.player.proche(pic3)) {this.contact(pic3);}
+		if(this.player.proche(pic4)) {this.contact(pic4);}
+		if(this.player.proche(pic5)) {this.contact(pic5);}
+		//if(this.player.proche(pic6)) {this.contact(pic6);}
+		//if(this.player.proche(pic7)) {this.contact(pic7);}
+		//if(this.player.proche(pic8)) {this.contact(pic8);}
 		if(this.player.proche(bloc1)) {this.contact(bloc1);}
+		if(this.player.proche(bloc2)) {this.contact(bloc2);}
+		if(this.player.proche(bloc3)) {this.contact(bloc3);}
+		if(this.player.proche(bloc4)) {this.contact(bloc4);}
+		if(this.player.proche(plateforme1)) {this.contact(plateforme1);}
 	
 		this.moveScreen(); //on appel la fonction pour deplacer l'écran à chaque boucle du run du thread
+		this.drapeau.mouvement();
 		this.pic1.mouvement();
+		this.pic2.mouvement();
+		this.pic3.mouvement();
+		this.pic4.mouvement();
+		this.pic5.mouvement();
+		//this.pic6.mouvement();
+		//this.pic7.mouvement();
+		//this.pic8.mouvement();
 		this.bloc1.mouvement();
+		this.bloc2.mouvement();
+		this.bloc3.mouvement();
+		this.bloc4.mouvement();
+		this.plateforme1.mouvement();
 		
-		System.out.println("pnj y : " + (this.player.getY()+this.player.getHeight()) );
-		System.out.println("pic y : " + this.pic1.getY());
+		
 		g2.drawImage(this.imageFond, this.xFond,0,null); //dessin image du fond
 		g2.drawImage(this.imageFond2, this.xFond2,0,null);
 		
 		g2.drawImage(this.imagePanneau, 300-this.xPos,280,null);//on fixe le panneau au même endroit
+		g2.drawImage(this.drapeau.getImageDrapeau(),this.drapeau.getX(),this.drapeau.getY(),this.drapeau.getWidth(),this.drapeau.getHeight(),null);
 		g2.drawImage(this.pic1.getImagePic(),this.pic1.getX(), this.pic1.getY(),this.pic1.getWidth(),this.pic1.getHeight(),null);
+		g2.drawImage(this.pic2.getImagePic(),this.pic2.getX(), this.pic2.getY(),this.pic2.getWidth(),this.pic2.getHeight(),null);
+		g2.drawImage(this.pic3.getImagePic(),this.pic3.getX(), this.pic3.getY(),this.pic3.getWidth(),this.pic3.getHeight(),null);
+		g2.drawImage(this.pic4.getImagePic(),this.pic4.getX(), this.pic4.getY(),this.pic4.getWidth(),this.pic4.getHeight(),null);
+		g2.drawImage(this.pic5.getImagePic(),this.pic5.getX(), this.pic5.getY(),this.pic5.getWidth(),this.pic5.getHeight(),null);
+		//g2.drawImage(this.pic6.getImagePic(),this.pic6.getX(), this.pic6.getY(),this.pic6.getWidth(),this.pic6.getHeight(),null);
+		//g2.drawImage(this.pic7.getImagePic(),this.pic7.getX(), this.pic7.getY(),this.pic7.getWidth(),this.pic7.getHeight(),null);
+		//g2.drawImage(this.pic8.getImagePic(),this.pic8.getX(), this.pic8.getY(),this.pic8.getWidth(),this.pic8.getHeight(),null);
 		g2.drawImage(this.bloc1.getImageBloc(),this.bloc1.getX(), this.bloc1.getY(),this.bloc1.getWidth(),this.bloc1.getHeight(),null);
+		g2.drawImage(this.bloc2.getImageBloc(),this.bloc2.getX(), this.bloc2.getY(),this.bloc2.getWidth(),this.bloc2.getHeight(),null);
+		g2.drawImage(this.bloc3.getImageBloc(),this.bloc3.getX(), this.bloc3.getY(),this.bloc3.getWidth(),this.bloc3.getHeight(),null);
+		g2.drawImage(this.bloc4.getImageBloc(),this.bloc4.getX(), this.bloc4.getY(),this.bloc4.getWidth(),this.bloc4.getHeight(),null);
+		g2.drawImage(this.plateforme1.getImagePlateforme(),this.plateforme1.getX(), this.plateforme1.getY(),this.plateforme1.getWidth(),this.plateforme1.getHeight(),null);
 		//utilisation de longueur et hauteur de l'écran pour bien placer le personnage quelque soit la taille de l'écran de l'ordinateur
 		if(this.player.isSaut() == true) {g2.drawImage(this.player.saute(),this.player.getX(),this.player.getY(),this.player.getWidth(),this.player.getHeight(),null);}
 		else {g2.drawImage(this.player.walk("perso",5),this.player.getX(), this.player.getY(),this.player.getWidth(),this.player.getHeight(),null);}
-		
-		g2.drawRect(this.player.getX(),this.player.getY(),this.player.getWidth(),this.player.getHeight()); // drawRect(x-position, y-position, width, height)
-		g2.drawRect(this.pic1.getX(),this.pic1.getY(),this.pic1.getWidth(),this.pic1.getHeight());
-		g2.drawRect(this.bloc1.getX(),this.bloc1.getY(),this.bloc1.getWidth(),this.bloc1.getHeight());
+		g2.drawImage(this.player.getImageVies(), 0, 0, null);	
 	}
 }
