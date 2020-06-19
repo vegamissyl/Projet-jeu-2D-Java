@@ -9,18 +9,21 @@ import Controller.Main;
 
 public class EntityPlayer extends Entity {
 	
+	// Image du personnage
 	private ImageIcon iconPerso;
 	private Image imagePerso;
+	// Image de la barre de vie
 	private ImageIcon iconVies;
 	private Image imageVies;
-	private boolean saut;
-	private int compteurSaut;
-	private int vies;
-	private int compteurMort;
-	private boolean invincible;
+	private boolean saut;  // Etat du personnage sur le saut vrai/faux
+	private int compteurSaut; // Compteur de l'ascension du personnage
+	private int vies; // Compteur du nombre de vie
+	private int compteurMort; // Compteur permettant de temporiser les pertes de coeur
+	private boolean invincible; // Booleen permettant de temporiser aussi les pertes de coeur
 	
+	// Constructeur
 	public EntityPlayer(int _x, int _y) {
-		super(_x, _y, 100, 208);
+		super(_x, _y, 100, 208); //superconstructeur de la classe Entity
 		this.vies = 3;
 		this.compteurMort = 0;
 		this.invincible = false;
@@ -36,18 +39,13 @@ public class EntityPlayer extends Entity {
 	}
 
 	
-	//***Getters***///
+	// Getters et Setters
 
 	public Image getImagePerso() {return imagePerso;}
-
 	public Image getImageVies() {return imageVies;}
-	
 	public boolean isSaut() {return saut;}
-	
 	public void setSaut(boolean saut) {this.saut = saut;}
-	
 	public int getVies() {return vies;}
-
 	public void setVies(int vies) {
 		this.vies = vies;
 		if(this.vies == 2) {
@@ -79,7 +77,7 @@ public class EntityPlayer extends Entity {
 			else {this.compteurSaut = 36;}
 			if(this.isDirectionRight() == true) {src = "/images/perso_marche_d.png";}
 			else {src = "/images/perso_marche_g.png";}
-		}else if(this.getY() + this.getHeight() < View.PanelGame.getySol()) {this.setY(this.getY() + 2);
+		}else if(this.getY() + this.getHeight() < View.PanelGame.getySol()) {this.setY(this.getY() + 4);
 			if(this.isDirectionRight() == true) {src = "/images/perso_marche_d.png";}
 			else {src = "/images/perso_marche_g.png";}
 		}else {

@@ -19,26 +19,23 @@ public class Input implements KeyListener{
 			}
 			Main.scene.player.setWalk(true);
 			Main.scene.player.setDirectionRight(true);
-			Main.scene.setDx(8);         //si on appui sur D on deplace l'écran vers la gauche
+			Main.scene.setDx(4);         //si on appui sur D on deplace l'écran vers la gauche
 		}
 		else if (arg0.getKeyCode() == KeyEvent.VK_Q){
 			Main.scene.player.setWalk(true);
 			Main.scene.player.setDirectionRight(false);
-			Main.scene.setDx(-8);		//si on appui sur D on deplace l'écran vers la droite
+			Main.scene.setDx(-4);		//si on appui sur D on deplace l'écran vers la droite
 		}
 		
 		if(arg0.getKeyCode() == KeyEvent.VK_SPACE) {
 			View.PanelGame.player.setSaut(true);
 		}
-		//if(!Model.windowVariables.keyPressed.contains(arg0.getKeyChar())) Model.windowVariables.keyPressed.add(arg0.getKeyChar()); 
-	 	//System.out.println("input : " + Model.windowVariables.keyPressed.get(0));
 	}
 	 
 	public void keyReleased(KeyEvent arg0)
 	{	
 		Main.scene.player.setWalk(false);
-	 	Main.scene.setDx(0);  //dès que la touche est relaché Dx vaut 0 et le personnage ne bouge plus (la scène reste fixe)
-		//if(Model.windowVariables.keyPressed.contains(arg0.getKeyChar())) Model.windowVariables.keyPressed.remove(arg0.getKeyChar()); 
+	 	Main.scene.setDx(0);  //dès que la touche est relaché Dx vaut 0 et le personnage ne bouge plus (la scène reste fixe) 
 	}
 	 
 	public void keyTyped(KeyEvent arg0) {}
