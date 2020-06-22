@@ -8,3 +8,7 @@
 /MenuFrame$EventExit.class
 /MenuFrame.class
 /MenuPanel.class
+/OptionsFrame.class
+/MenuFrame$EventOptions.class
+/OptionsFrame$EventOff.class
+/OptionsFrame$EventOn.class

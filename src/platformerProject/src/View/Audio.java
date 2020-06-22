@@ -6,6 +6,7 @@ import javax.sound.sampled.Clip;
 public class Audio {
 	
 	private Clip musique;
+	public static Boolean joue;
 	
 	public Audio(String zik) {
 		try {
@@ -21,9 +22,7 @@ public class Audio {
 	
 	public void play() {musique.start();}
 	public void stop() {musique.stop();}
-	public static void playSound(String son) {
-		Audio s = new Audio(son);
-		s.play();
-	}
+	public void loop() {musique.loop(1);}
+	
 	
 }

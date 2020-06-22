@@ -40,11 +40,13 @@ public class MenuFrame extends JFrame implements ActionListener{
 		private ImageIcon iconOptions;
 		private Image imageOptions;
 		
-		
+		URL url;
+		Audio audio;
 		
 		public MenuFrame() {
 			super();
-			
+			Audio.joue = true;
+			audio = new Audio("/audio/Song_of_Sadhana.wav");
 			iconPlay = new ImageIcon(getClass().getResource("/images/play.png"));
 			this.imagePlay = this.iconPlay.getImage();
 			
@@ -53,9 +55,6 @@ public class MenuFrame extends JFrame implements ActionListener{
 			
 			iconOptions = new ImageIcon(getClass().getResource("/images/options.png"));
 			this.imageOptions = this.iconOptions.getImage();
-			
-			
-			
 			
 			menu = new MenuPanel();
 			this.setTitle("La Quête de GrAAl"); //titre
@@ -67,22 +66,8 @@ public class MenuFrame extends JFrame implements ActionListener{
 			this.setAlwaysOnTop(true); // fenêtre devant les autres
 			this.setContentPane(menu);
 			
-			URL url = getClass().getResource("/audio/Song_of_Sadhana.wav"); //on enregistre l'url de la musique
-			
-			/*AudioClip son = Applet.newAudioClip(url);
-			son.play();*/
-			/*final Clip clip = AudioSystem.getClip();
-			try(AudioInputStream audioIn = AudioSystem.getAudioInputStream(url)) {
-				clip.open(audioIn);
-			}
-			
-			
-			this.addWindowListener(new WindowAdapter() {
-				
-				public void windowOpened(WindowEvent e) {
-					clip.start();  
-					
-			});*/
+			this.url = getClass().getResource("/audio/Song_of_Sadhana.wav"); //on enregistre l'url de la musique
+			audio.loop();
 			
 			//bouton exit
 			JButton exit = new JButton(iconExit);
@@ -107,6 +92,7 @@ public class MenuFrame extends JFrame implements ActionListener{
 			option.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
 			option.setBorderPainted(false); // De même, on ne veut pas afficher les bordures.
 			option.setFocusPainted(false);
+			option.addActionListener(new EventOptions(this.audio));
 			
 			//construction du GridBagLayout
 			GridBagLayout G = new GridBagLayout();
@@ -165,7 +151,18 @@ public class MenuFrame extends JFrame implements ActionListener{
 			}
 		
 		}
-
+		public class EventOptions implements ActionListener{
+			Audio music;
+			public EventOptions(Audio son) {
+				music = son;
+			}
+			public void actionPerformed(ActionEvent e) {
+				
+				OptionsFrame fenetre_options = new OptionsFrame(this.music);
+				fenetre_options.setVisible(true);
+			}
+		
+		}
 
 }			
 
