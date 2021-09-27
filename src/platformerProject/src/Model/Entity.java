@@ -22,7 +22,7 @@ public class Entity {
 	public int counter; //compteur des pas du personnage
 	
 	
-	
+	// Constructeur
 	public Entity(int _x, int _y, int _width, int _height) {
 		
 		this.x = _x;
@@ -35,7 +35,7 @@ public class Entity {
 		
 	}
 	
-	///getters///
+	//getters//
 	public int getWidth() {return width;}
 
 	public int getHeight() {return height;}
@@ -50,7 +50,7 @@ public class Entity {
 
 	public int getCounter() {return counter;}
 
-	///setters///
+	//setters//
 	public void setWidth(int width) {this.width = width;}
 	
 	public void setHeight(int height) {this.height = height;}
@@ -65,7 +65,7 @@ public class Entity {
 	
 	public void setCounter(int counter) {this.counter = counter;}
 	
-	///methodes///
+	//methodes//
 	public Image walk(String nom, int frequence) { //nom du personnage et fréquence pour laquelle il marche
 		String str;
 		ImageIcon ico;
@@ -124,6 +124,7 @@ public class Entity {
 		return img; 
 	}
 	
+	// Detection d'un contact sur la droite
 	public boolean contactAvant(Object objet) {
 		if (this.x + this.width < objet.getX() || this.x + this.width > objet.getX() + 5 || this.y + this.height <= objet.getY() || this.y >= objet.getY() + objet.getHeight()) {
 			return false;
@@ -131,6 +132,7 @@ public class Entity {
 			return true;
 		}
 	}
+	// Detection d'un contact sur la gauche
 	public boolean contactArriere(Object objet) {
 		if (this.x > objet.getX() + objet.getWidth() || this.x + this.width > objet.getX() + objet.getWidth() + objet.getWidth() ||
 				this.y + this.height <= objet.getY() || this.y >= objet.getY() + objet.getHeight()) {
@@ -139,6 +141,8 @@ public class Entity {
 			return true;
 		}
 	}
+	
+	// Detection d'un contact sous le personnage
 	public boolean contactDessous(Object objet) {
 		if (this.x  > objet.getX() + objet.getWidth() || this.x  > objet.getX() + objet.getWidth() - 5||
 				this.y + this.height < objet.getY() || this.y + this.height > objet.getY() + 5 ) {
@@ -147,6 +151,8 @@ public class Entity {
 			return true;
 		}
 	}
+	
+	// Détection d'un contact au dessus du personnage
 	public boolean contactDessus(Object objet) {
 		if (this.x + this.width < objet.getX() + 5  || this.x  > objet.getX() + objet.getWidth() - 5 ||
 				this.y < objet.getY() + objet.getHeight() || this.y > objet.getY() + objet.getHeight() + 5) {
@@ -155,6 +161,8 @@ public class Entity {
 			return true;
 		}
 	}
+	
+	// Détection de la proximité du personnage avec un objet
 	public boolean proche(Object objet) {
 		if ((this.x > objet.getX() - 10 && this.x < objet.getX() + objet.getWidth() + 10) ||
 				(this.x + this.width > objet.getX() - 10 && this.x + this.width < objet.getX() + objet.getWidth() + 10)) {

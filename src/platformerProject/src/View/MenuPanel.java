@@ -48,7 +48,7 @@ public class MenuPanel extends JPanel {
 		g2.drawImage(this.imageFondGif,0,0, this.getWidth(),this.getHeight(),this); //dessin image du fond
 		g2.drawImage(this.imageTitle,355,0, 710,100,this);
 		g2.drawImage(this.imageCommandes,483,590, 430,150,this);
-}
+	}
 
 
 }

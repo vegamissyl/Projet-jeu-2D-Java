@@ -30,7 +30,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class MenuFrame extends JFrame implements ActionListener{
 		MenuPanel menu;
-		
+		public static FrameGame fenetre_jeu;
 		private ImageIcon iconPlay;
 		private Image imagePlay;
 		
@@ -40,13 +40,12 @@ public class MenuFrame extends JFrame implements ActionListener{
 		private ImageIcon iconOptions;
 		private Image imageOptions;
 		
-		URL url;
 		Audio audio;
 		
 		public MenuFrame() {
 			super();
 			Audio.joue = true;
-			audio = new Audio("/audio/Song_of_Sadhana.wav");
+			audio = new Audio("/audio/Sunset_Strip.wav");
 			iconPlay = new ImageIcon(getClass().getResource("/images/play.png"));
 			this.imagePlay = this.iconPlay.getImage();
 			
@@ -61,12 +60,11 @@ public class MenuFrame extends JFrame implements ActionListener{
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // permet de pouvoir fermer la fenêtre
 			this.setSize(1420,800);
 			this.setLocationRelativeTo(null); //centrer à l'écran
-			//this.setExtendedState(Frame.MAXIMIZED_BOTH);// taille max
 			this.setResizable(false); // interdit de la redimensionner
 			this.setAlwaysOnTop(true); // fenêtre devant les autres
 			this.setContentPane(menu);
 			
-			this.url = getClass().getResource("/audio/Song_of_Sadhana.wav"); //on enregistre l'url de la musique
+			
 			audio.loop();
 			
 			//bouton exit
@@ -105,7 +103,6 @@ public class MenuFrame extends JFrame implements ActionListener{
 			c.gridwidth=1;
 			c.gridheight=1;
 			c.anchor = GridBagConstraints.CENTER;
-			//c.anchor = GridBagConstraints.PAGE_END;
 			c.fill = GridBagConstraints.NONE;
 			this.add(play,c);
 			
@@ -113,8 +110,6 @@ public class MenuFrame extends JFrame implements ActionListener{
 			c.gridy = 1;
 			c.gridwidth=1;
 			c.gridheight=1;
-			//c.weightx = 5;
-			//c.weightx = 0;
 			c.anchor = GridBagConstraints.CENTER;
 			c.fill = GridBagConstraints.NONE;
 			this.add(option,c);
@@ -134,7 +129,7 @@ public class MenuFrame extends JFrame implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			
 			// on instancie la fenetre de jeu
-			FrameGame fenetre_jeu = new FrameGame();
+			fenetre_jeu = new FrameGame();
 			// on instancie la scene du jeu 
 			Main.scene = new PanelGame();
 			

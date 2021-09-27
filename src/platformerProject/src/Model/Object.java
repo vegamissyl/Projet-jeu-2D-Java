@@ -1,5 +1,6 @@
 package Model;
 
+// Classe mère de tous les objets de l'environnement du jeu
 public class Object {
 		//dimension de l'objet (largeur et haiteur)
 		private int width;
@@ -38,6 +39,7 @@ public class Object {
 
 		// autres methodes
 		
+		// Mouvement relatif au déplacement du personnage
 		public void mouvement() {
 			if (View.PanelGame.getxPos() >= 0) {
 				this.x = this.x - View.PanelGame.getDx();

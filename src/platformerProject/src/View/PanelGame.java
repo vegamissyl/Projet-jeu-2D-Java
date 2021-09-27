@@ -10,6 +10,8 @@ import Model.Plateforme;
 
 import javax.swing.JPanel;
 
+import Controller.Main;
+
 // import com.sun.tools.sjavac.server.SysInfo;
 
 import javax.swing.ImageIcon;
@@ -94,7 +96,6 @@ public class PanelGame extends JPanel {
 		pic4 = new Pic(2130,620 , 117 ,63);
 		pic6 = new Pic(3000,620 , 117 ,63);
 		pic7 = new Pic(3120,620 , 117 ,63);
-		pic8 = new Pic(3240,620 , 117 ,63);
 		pic9 = new Pic(3540,620 , 117 ,63);
 		pic10 = new Pic(3660,620 , 117 ,63);
 		bloc1 = new Bloc(1000,595,85,85);
@@ -169,7 +170,7 @@ public class PanelGame extends JPanel {
 				if(this.player.getCompteurMort() % 100 == 0) {
 					this.player.setVies(this.player.getVies()-1);
 				}
-			}
+			}else if(objet.getClass().getName() == "Model.Drapeau") {this.player.setVictoire(true);}
 			this.setDx(0);
 			this.player.setWalk(false);
 		}
@@ -199,6 +200,18 @@ public class PanelGame extends JPanel {
 		}
 	}
 
+	// Methode qui va vérifier si le personnage est mort ou si le jeu est fini
+	public void finjeu() {
+		if(this.player.isMort() == true) {
+			Main.fenetre_menu.setVisible(true);
+			MenuFrame.fenetre_jeu.dispose();
+			this.player.setMort(false);
+		}else if(this.player.isVictoire() == true) {
+			Main.fenetre_menu.setVisible(true);
+			MenuFrame.fenetre_jeu.dispose();
+			this.player.setVictoire(false);
+		}
+	}
 	// Fonction qui va repeindre le jeu et les objets
 	public void paintComponent(Graphics g) {	
 		super.paintComponent(g);
@@ -211,7 +224,6 @@ public class PanelGame extends JPanel {
 		if(this.player.proche(pic4)) {this.contact(pic4);}
 		if(this.player.proche(pic6)) {this.contact(pic6);}
 		if(this.player.proche(pic7)) {this.contact(pic7);}
-		if(this.player.proche(pic8)) {this.contact(pic8);}
 		if(this.player.proche(pic9)) {this.contact(pic9);}
 		if(this.player.proche(pic10)) {this.contact(pic10);}
 		if(this.player.proche(bloc1)) {this.contact(bloc1);}
@@ -220,6 +232,7 @@ public class PanelGame extends JPanel {
 		if(this.player.proche(bloc4)) {this.contact(bloc4);}
 		if(this.player.proche(bloc5)) {this.contact(bloc5);}
 		if(this.player.proche(plateforme1)) {this.contact(plateforme1);}
+		if(this.player.proche(drapeau)) {this.contact(drapeau);}
 	
 		this.moveScreen(); //on appel la fonction pour deplacer l'écran à chaque boucle du run du thread
 		
@@ -231,7 +244,6 @@ public class PanelGame extends JPanel {
 		this.pic4.mouvement();
 		this.pic6.mouvement();
 		this.pic7.mouvement();
-		this.pic8.mouvement();
 		this.pic9.mouvement();
 		this.pic10.mouvement();
 		this.bloc1.mouvement();
@@ -240,6 +252,8 @@ public class PanelGame extends JPanel {
 		this.bloc4.mouvement();
 		this.bloc5.mouvement();
 		this.plateforme1.mouvement();
+		
+		this.finjeu();
 		
 		//Dessin de toutes les entités présentes dans le jeu
 		
@@ -254,7 +268,6 @@ public class PanelGame extends JPanel {
 		g2.drawImage(this.pic4.getImagePic(),this.pic4.getX(), this.pic4.getY(),this.pic4.getWidth(),this.pic4.getHeight(),null);
 		g2.drawImage(this.pic6.getImagePic(),this.pic6.getX(), this.pic6.getY(),this.pic6.getWidth(),this.pic6.getHeight(),null);
 		g2.drawImage(this.pic7.getImagePic(),this.pic7.getX(), this.pic7.getY(),this.pic7.getWidth(),this.pic7.getHeight(),null);
-		g2.drawImage(this.pic8.getImagePic(),this.pic8.getX(), this.pic8.getY(),this.pic8.getWidth(),this.pic8.getHeight(),null);
 		g2.drawImage(this.pic9.getImagePic(),this.pic9.getX(), this.pic9.getY(),this.pic9.getWidth(),this.pic9.getHeight(),null);
 		g2.drawImage(this.pic10.getImagePic(),this.pic10.getX(), this.pic10.getY(),this.pic10.getWidth(),this.pic10.getHeight(),null);
 		g2.drawImage(this.bloc1.getImageBloc(),this.bloc1.getX(), this.bloc1.getY(),this.bloc1.getWidth(),this.bloc1.getHeight(),null);
@@ -268,5 +281,6 @@ public class PanelGame extends JPanel {
 		if(this.player.isSaut() == true) {g2.drawImage(this.player.saute(),this.player.getX(),this.player.getY(),this.player.getWidth(),this.player.getHeight(),null);}
 		else {g2.drawImage(this.player.walk("perso",5),this.player.getX(), this.player.getY(),this.player.getWidth(),this.player.getHeight(),null);}
 		g2.drawImage(this.player.getImageVies(), 0, 0, null);	
+		
 	}
 }

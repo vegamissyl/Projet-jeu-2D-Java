@@ -67,7 +67,7 @@ public class OptionsFrame extends JFrame  {
 	    
 	}
 
-	
+	// Event lorsque l'on veut couper la musique
 	public class EventOff implements ActionListener{
 		Audio audio;
 		public EventOff(Audio son){
@@ -79,6 +79,8 @@ public class OptionsFrame extends JFrame  {
 		}
 	
 	}
+	
+	// Event lorsque l'on veut réactiver la musique
 	public class EventOn implements ActionListener{
 		Audio audio;
 		public EventOn(Audio son){

@@ -20,12 +20,16 @@ public class EntityPlayer extends Entity {
 	private int vies; // Compteur du nombre de vie
 	private int compteurMort; // Compteur permettant de temporiser les pertes de coeur
 	private boolean invincible; // Booleen permettant de temporiser aussi les pertes de coeur
+	private boolean mort;
+	private boolean victoire;
 	
 	// Constructeur
 	public EntityPlayer(int _x, int _y) {
 		super(_x, _y, 100, 208); //superconstructeur de la classe Entity
 		this.vies = 3;
 		this.compteurMort = 0;
+		this.mort = false;
+		this.victoire = false;
 		this.invincible = false;
 		iconVies = new ImageIcon(getClass().getResource("/images/3_coeurs.png"));
 		this.imageVies = this.iconVies.getImage();
@@ -51,9 +55,12 @@ public class EntityPlayer extends Entity {
 		if(this.vies == 2) {
 			this.iconVies = new ImageIcon(getClass().getResource("/images/2_coeurs.png"));
 			this.imageVies = this.iconVies.getImage();
-		} else {
+		} else if(this.vies == 1) {
 			this.iconVies = new ImageIcon(getClass().getResource("/images/coeur.png"));
 			this.imageVies = this.iconVies.getImage();
+		 }
+		else {
+			this.setMort(true);
 		}
 	}
 	
@@ -63,9 +70,15 @@ public class EntityPlayer extends Entity {
 	public boolean isInvincible() {return invincible;}
 	public void setInvincible(boolean invincible) {this.invincible = invincible;}
 
+	public boolean isMort() {return mort;}
+	public void setMort(boolean mort) {this.mort = mort;}
+	
+	public boolean isVictoire() {return victoire;}
+	public void setVictoire(boolean victoire) {this.victoire = victoire;}
 	
 	//***Methods***//
 
+	// Methode qui gère la saut du personnage
 	public Image saute() {
 		ImageIcon ico;
 		Image img;
@@ -91,4 +104,6 @@ public class EntityPlayer extends Entity {
 		img = ico.getImage();
 		return img;
 	}
+
+
 }
